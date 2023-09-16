@@ -21,13 +21,13 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 
 #datagroup to cache explore for 4 hours
 datagroup: etl {
-  max_cache_age: "4 hours"
+  max_cache_age: "4 hours" #add sql trigger to add a condition
 }
 
 #explore order items persisted by applying the etl datagroup
 explore: users{
   persist_with: etl
-  sql_always_where: ${created_date} >= '2023-01-01';;
+  sql_always_where: ${created_date} >= '2023-01-01';; #defined in model so limiting the orders for 2023, can't see on the front-end, cannot be changed
   join: order_items{
     type: left_outer
     sql_on: ${users.id} = ${order_items.user_id} ;;
@@ -39,7 +39,7 @@ explore: users{
 explore: order_items {
   label: "Order Details"
   always_filter: {
-    filters: [order_items.sale_price: ">=1000"]
+    filters: [order_items.sale_price: ">=100"] #available on front-end, user can change this filter
   }
   join: inventory_items {
     view_label: "Inventory Items"

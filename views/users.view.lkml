@@ -68,5 +68,40 @@ view: users {
   measure: this_week_count{
     type: count_distinct
     filters: [created_date: "7 days"] #filtered measure
+    sql: ${TABLE}.id ;;
+  }
+  dimension: age_group {
+    case: {
+      when: {
+        sql: ${TABLE}.age < 18  ;;
+        label: "Less than 18 years old "
+      }
+      when: {
+        sql: ${TABLE}.age >= 18 and ${TABLE}.age < 26  ;;
+        label: "Between 18 and 25"
+      }
+      when: {
+        sql: ${TABLE}.age >= 26 and ${TABLE}.age < 36  ;;
+        label: "Between 26 and 35"
+      }
+      when: {
+        sql: ${TABLE}.age >= 36 and ${TABLE}.age < 46  ;;
+        label: "Between 36 and 45"
+      }
+      when: {
+        sql: ${TABLE}.age >= 46 and ${TABLE}.age < 56  ;;
+        label: "Between 46 and 55"
+      }
+      when: {
+        sql: ${TABLE}.age >= 56 and ${TABLE}.age < 66  ;;
+        label: "Between 56 and 65"
+      }
+      else: "Greater than 65 years old"
+    }
+  }
+  dimension: user_location {
+    type: location
+    sql_latitude: ${latitude} ;;
+    sql_longitude: ${longitude} ;;
   }
 }

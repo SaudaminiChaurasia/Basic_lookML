@@ -58,6 +58,11 @@ view: order_items {
     type: count
     drill_fields: [detail*]
   }
+  measure: total_orders {
+    label: "Total orders"
+    type:  count_distinct
+    sql: ${TABLE}.order_id ;;
+  }
   measure: total_amt {
     label: "Total Sales Amount"
     type:  sum
@@ -68,16 +73,19 @@ view: order_items {
     label: "Average Sales Amount"
     type:  average
     sql: ${TABLE}.sale_price ;;
+    value_format: "$#.00;($#.00)"
   }
   measure: maximum_amt {
     label: "Maximum Sales Amount"
     type:  max
     sql: ${TABLE}.sale_price ;;
+    value_format: "$#.00;($#.00)"
   }
   measure: minimum_amt {
     label: "Minimum Sales Amount"
     type:  min
     sql: ${TABLE}.sale_price ;;
+    value_format: "$#.00;($#.00)"
   }
   measure: percent_of_total_sales {
     label: "Percent of Total Sales Amount"
