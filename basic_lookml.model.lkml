@@ -21,7 +21,8 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 
 #datagroup to cache explore for 4 hours
 datagroup: etl {
-  max_cache_age: "4 hours" #add sql trigger to add a condition
+  max_cache_age: "4 hours"
+  sql_trigger: SELECT max(id) FROM users ;; #when the value returned by the query is different than the query's prior results, then the datagroup goes into a triggered state.
 }
 
 #explore order items persisted by applying the etl datagroup
@@ -40,6 +41,7 @@ explore: order_items {
   label: "Order Details"
   always_filter: {
     filters: [order_items.sale_price: ">=100"] #available on front-end, user can change this filter
+    #filters: [users.country: "is any value"]
   }
   join: inventory_items {
     view_label: "Inventory Items"
