@@ -99,6 +99,13 @@ view: users {
       else: "Greater than 65 years old"
     }
   }
+  dimension: age_tier {
+    label: "Age Tier"
+    type: tier
+    tiers: [0, 10, 20, 30, 40, 50, 60, 70, 80]
+    style: integer
+    sql: ${age} ;;
+  }
   dimension: user_location {
     type: location
     sql_latitude: ${latitude} ;;
