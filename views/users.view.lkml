@@ -52,6 +52,7 @@ view: users {
   dimension: state {
     type: string
     sql: ${TABLE}.state ;;
+    required_access_grants: [can_view_state_data] #required access grant parameter
   }
   dimension: traffic_source {
     type: string
@@ -102,7 +103,7 @@ view: users {
   dimension: age_tier {
     label: "Age Tier"
     type: tier
-    tiers: [0, 10, 20, 30, 40, 50, 60, 70, 80]
+    tiers: [0, 30, 40, 50, 60, 70, 80]
     style: integer
     sql: ${age} ;;
   }

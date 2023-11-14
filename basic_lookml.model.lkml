@@ -19,6 +19,12 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 #   }
 # }
 
+#access grant
+access_grant: can_view_state_data {
+  user_attribute: saudamini_can_see_pii
+  allowed_values: [ "Arizona","Bristol","California" ]
+}
+
 #datagroup to cache explore for 4 hours
 datagroup: etl {
   max_cache_age: "4 hours"
@@ -38,6 +44,10 @@ explore: users{
 
 #explore to join all the views, uses view labels
 explore: order_items {
+  access_filter: {
+    field: products.brand
+    user_attribute: brand_test
+  }
   label: "Order Details"
   always_filter: {
     filters: [order_items.sale_price: ">=100"] #available on front-end, user can change this filter
